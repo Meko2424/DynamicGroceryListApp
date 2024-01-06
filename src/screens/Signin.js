@@ -26,6 +26,7 @@ const Signin = ({navigation}) => {
       .signInWithEmailAndPassword(values.email, values.password)
       .then(() => {
         Alert.alert('Signed in!');
+        //navigation.navigate('Lists');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -37,6 +38,11 @@ const Signin = ({navigation}) => {
         }
       });
   };
+
+  const handleForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Title>Login to your account!</Title>
@@ -51,8 +57,12 @@ const Signin = ({navigation}) => {
         secureTextEntry //secureTextEntry is a prop, to hide the characters entered
         onChangeText={val => onChange(val, 'password')}
       />
-      {/* <Button>Login</Button> */}
+
       <Button onPress={onSubmit}>Login</Button>
+
+      <Text style={styles.forgotPasswordLink} onPress={handleForgotPassword}>
+        Forgot Password?
+      </Text>
 
       <Text style={styles.footerText}>
         Don't have an account?
@@ -82,23 +92,13 @@ const styles = StyleSheet.create({
     color: colors.purple,
     fontWeight: 'bold',
   },
+
+  forgotPasswordLink: {
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    color: colors.red,
+    fontWeight: 'bold',
+  },
 });
 
 export default Signin;
-
-//----------------------------------------------
-
-// import {StyleSheet, Text, View} from 'react-native';
-// import React from 'react';
-
-// const Signin = () => {
-//   return (
-//     <View>
-//       <Button>Login</Button>
-//     </View>
-//   );
-// };
-
-// export default Signin;
-
-// const styles = StyleSheet.create({});

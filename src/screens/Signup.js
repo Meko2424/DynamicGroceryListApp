@@ -1,18 +1,9 @@
-// Terms and conditions: V-109
 import React from 'react';
 import {useState} from 'react';
 import {ScrollView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
-import {
-  Alert,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
 import Button from '../components/buttons/Button';
 import Input from '../components/input/Input';
@@ -116,8 +107,6 @@ const Signup = ({navigation}) => {
         <Button onPress={onSubmit} type="blue">
           Signup
         </Button>
-        {/* <Button type="blue">Signup</Button> */}
-
         <Text style={styles.footerText}>
           Already a member?
           <Text

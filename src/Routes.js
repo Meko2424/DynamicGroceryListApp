@@ -17,6 +17,7 @@ import Signup from './screens/Signup';
 import Lists from './screens/Lists';
 import AddList from './screens/AddList';
 import EditList from './screens/EditList';
+import ForgotPassword from './screens/ForgotPassword ';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -47,10 +48,10 @@ const Routes = () => {
   }
 
   const Tabs = () => (
-    <Tab.Navigator screenOptions={{tabBarShowLabel: false, headerShown: false}}>
+    <Tab.Navigator screenOptions={{tabBarShowLabel: true, headerShown: false}}>
       {/* <Tab.Screen
-        name="Home"
-        component={Home}
+        name="Signin"
+        component={Signin}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
@@ -74,7 +75,7 @@ const Routes = () => {
               style={styles.icon}
               source={
                 focused
-                  ? require('./assets/add_shopping_cartL.png')
+                  ? require('./assets/ListView.png')
                   : require('./assets/calendar_inactive.png')
               }
             />
@@ -91,9 +92,7 @@ const Routes = () => {
         screenOptions={{headerShown: false}}
         drawerContent={props => <DrawerContent {...props} />}>
         <Drawer.Screen name="Tabs" component={Tabs} />
-        {/* <Drawer.Screen name="Home" component={Home} /> */}
         <Drawer.Screen name="AddList" component={AddList} />
-        <Drawer.Screen name="EditList" component={EditList} />
       </Drawer.Navigator>
     );
   }
@@ -101,8 +100,9 @@ const Routes = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Onboard" component={Onboard} />
-      <Stack.Screen name="Signin" component={Signin} />
       <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Signin" component={Signin} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
   );
 };

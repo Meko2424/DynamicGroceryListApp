@@ -14,7 +14,6 @@ import {
 import Title from '../components/title/Title';
 import Input from '../components/input/Input';
 import colors from '../constants/colors';
-
 import Button from '../components/buttons/Button';
 import {setToUpdate} from '../store/lists';
 
@@ -22,8 +21,6 @@ const AddList = ({navigation}) => {
   const user = useSelector(state => state.user.data);
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
-  // const [category, setCategory] = useState();
-  // const [deadline, setDeadline] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const handleBack = () => {
     navigation.goBack();
@@ -98,9 +95,9 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
+    fontWeight: '700',
     color: colors.black,
     marginHorizontal: 24,
-    fontWeight: '700',
     marginTop: 12,
   },
   button: {

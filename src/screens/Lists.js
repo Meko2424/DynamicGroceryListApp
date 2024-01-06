@@ -9,16 +9,16 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  Image,
+  Pressable,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
-
 import {setToUpdate, setLists} from '../store/lists';
 import Checkbox from '../components/checkbox/Checkbox';
-import Header from '../components/header/Header';
 import PlusIcon from '../components/plusIcon/PlusIcon';
 import colors from '../constants/colors';
-import Title from '../components/title/Title';
+import {Share} from 'react-native';
 
 const Lists = ({navigation}) => {
   const dispatch = useDispatch();
@@ -32,6 +32,10 @@ const Lists = ({navigation}) => {
     setEditItem(item); // Set the item to be edited
     setEditedTitle(item.title); // Set the edited title to the current title
     setIsEditing(true); // Enable the editing mode
+  };
+
+  const openDrawer = () => {
+    navigation.openDrawer();
   };
 
   const onSaveEditedItem = () => {
@@ -80,7 +84,6 @@ const Lists = ({navigation}) => {
       .get()
       .then(querySnapshot => {
         const listsList = [];
-
         querySnapshot.forEach(documentSnapshot => {
           listsList.push({
             uid: documentSnapshot.id,
@@ -109,34 +112,68 @@ const Lists = ({navigation}) => {
         )}
         <View style={styles.button}>
           {isEditing && editItem?.uid === item.uid ? (
-            <Button title="Save" onPress={onSaveEditedItem} />
+            <Pressable onPress={() => onSaveEditedItem(item)}>
+              <Image
+                style={styles.icon}
+                source={require('../assets/save1.png')}
+              />
+            </Pressable>
           ) : (
-            <Button
-              title="Edit"
-              color={'#a9a9a9'}
-              onPress={() => onEditItem(item)}
-            />
+            <View>
+              <Pressable onPress={() => onEditItem(item)}>
+                <Image
+                  style={styles.icon}
+                  source={require('../assets/pencil.png')}
+                />
+              </Pressable>
+            </View>
           )}
-          <Button
-            title="Delete"
-            color={'#ff0000'}
-            onPress={() => onDeleteItem(item)}
-          />
+          <View>
+            <Pressable onPress={() => onDeleteItem(item)}>
+              <Image
+                style={styles.icon}
+                source={require('../assets/trash-bin.png')}
+              />
+            </Pressable>
+          </View>
         </View>
       </View>
-      // </TouchableOpacity>
     );
   };
+
+  const onShare = async () => {
+    try {
+      const sharedList = lists.map(item => item.title); // Convert list items to a comma-separated string
+      const result = await Share.share({
+        message: `List Items: ${sharedList} `, // Message to be shared
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="My Items" />
+      <View style={styles.row}>
+        <Pressable onPress={openDrawer}>
+          <Image style={styles.icon} source={require('../assets/menu2.png')} />
+        </Pressable>
+
+        <Text style={styles.title}>My Items</Text>
+        <View>
+          <Pressable onPress={onShare}>
+            <Image
+              style={styles.icon}
+              source={require('../assets/shareIcon.png')}
+            />
+          </Pressable>
+        </View>
+      </View>
       <FlatList
-        // ListHeaderComponent={<Title type="thin">Items List</Title>}
         data={lists}
         renderItem={renderList}
         keyExtractor={item => String(item?.uid)}
       />
-
       <PlusIcon />
     </SafeAreaView>
   );
@@ -148,9 +185,11 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    marginVertical: 8,
     alignItems: 'center',
     marginHorizontal: 10,
-    marginVertical: 8,
+    justifyContent: 'space-between',
+    marginTop: 20,
   },
   listText: {
     color: colors.black,
@@ -163,11 +202,20 @@ const styles = StyleSheet.create({
     textDecorationStyle: 'double',
   },
   button: {
-    //backgroundColor: colors.red,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '32%',
+    width: '24%',
     marginHorizontal: 10,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    color: colors.ghostwhite,
+  },
+  title: {
+    fontSize: 16,
+    color: colors.purple,
+    fontWeight: '500',
   },
 });
 

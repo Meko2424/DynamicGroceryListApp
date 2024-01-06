@@ -14,9 +14,15 @@ const Header = ({title, type}) => {
       <Pressable onPress={openDrawer} hitSlop={8}>
         <Image style={styles.icon} source={require('../../assets/menu2.png')} />
       </Pressable>
-
       <Text style={styles.title}>{title}</Text>
-      <View style={styles.icon} />
+      <View style={styles.icon}>
+        <Pressable>
+          <Image
+            style={styles.icon}
+            source={require('../../assets/shareIcon.png')}
+          />
+        </Pressable>
+      </View>
     </View>
   );
 };
