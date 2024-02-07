@@ -6,10 +6,19 @@ import {
 
 const onShare = async () => {
   try {
+    // const sharedItemList = lists.map(item => item.title).join(', '); // Convert list items to a comma-separated string
+    // const result = await Share.share({
+    //   message: `My Items: ${sharedItemList}`, // Message to be shared
+    // });
+
     const sharedItemList = lists.map(item => item.title).join(', '); // Convert list items to a comma-separated string
-    const result = await Share.share({
-      message: `My Items: ${sharedItemList}`, // Message to be shared
-    });
+    try {
+      const result = await Share.share({
+        message: `My Items: ${sharedItemList}`, // Message to be shared
+      });
+    } catch (error) {
+      console.error('Error sharing items:', error);
+    }
 
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
